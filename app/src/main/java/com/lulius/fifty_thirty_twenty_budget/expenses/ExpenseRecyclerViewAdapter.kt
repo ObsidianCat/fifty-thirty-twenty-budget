@@ -11,7 +11,7 @@ import com.lulius.fifty_thirty_twenty_budget.R
 import com.lulius.fifty_thirty_twenty_budget.expenses.ExpensesListFragment.OnListFragmentInteractionListener
 import com.lulius.fifty_thirty_twenty_budget.expenses.dummy.DummyContent.DummyItem
 
-import kotlinx.android.synthetic.main.fragment_expense.view.*
+import kotlinx.android.synthetic.main.fragment_expense_item.view.*
 
 /**
  * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the
@@ -36,7 +36,7 @@ class ExpenseRecyclerViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_expense, parent, false)
+            .inflate(R.layout.fragment_expense_item, parent, false)
         return ViewHolder(view)
     }
 

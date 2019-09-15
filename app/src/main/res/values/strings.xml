@@ -10,4 +10,8 @@
     <string name="expense_gbp">£</string>
     <string name="expense_set_category">Set category</string>
     <string name="expense_add">Add</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="action_add_expense">Add</string>
 </resources>

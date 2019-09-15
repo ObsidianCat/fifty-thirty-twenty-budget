@@ -11,4 +11,5 @@
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
         tools:context=".expenses.ExpensesListFragment"
-        tools:listitem="@layout/fragment_expense"/>
+        tools:listitem="@layout/fragment_expense_item">
+</androidx.recyclerview.widget.RecyclerView>
