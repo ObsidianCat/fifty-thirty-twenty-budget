@@ -8,11 +8,21 @@ import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.navOptions
 import androidx.navigation.ui.NavigationUI
 import com.lulius.fifty_thirty_twenty_budget.expenses.ExpensesListFragment
 
 class MainNavigationActivity : AppCompatActivity() {
+    private val transitionOptions = navOptions {
+        anim {
+            enter = R.anim.slide_in_right
+            exit = R.anim.slide_out_left
+            popEnter = R.anim.slide_in_left
+            popExit = R.anim.slide_out_right
+        }
+    }
 
     private lateinit var textMessage: TextView
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -46,10 +56,11 @@ class MainNavigationActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
         // Handle item selection
         return when (item.itemId) {
             R.id.action_add_expense -> {
-                this.findNavController(R.id.nav_host_fragment).navigate(R.id.addExpense, null)
+                this.findNavController(R.id.nav_host_fragment).navigate(R.id.addExpense, null, transitionOptions)
                 true
             }
             else -> super.onOptionsItemSelected(item)
