@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/nav_graph"
+        app:startDestination="@id/expensesListFragment">
+
+    <fragment
+            android:id="@+id/expensesListFragment"
+            android:name="com.lulius.fifty_thirty_twenty_budget.expenses.ExpensesListFragment"
+            android:label="fragment_expense_list"
+            tools:layout="@layout/fragment_expense_list" >
+        <action
+                android:id="@+id/action_expensesListFragment_to_addExpence"
+                app:destination="@id/addExpense" />
+        <action
+                android:id="@+id/action_expensesListFragment_to_fragment_expense"
+                app:destination="@id/fragment_expense" />
+    </fragment>
+    <fragment
+            android:id="@+id/addExpense"
+            android:name="com.lulius.fifty_thirty_twenty_budget.expenses.AddExpense"
+            android:label="fragment_add_expence"
+            tools:layout="@layout/fragment_add_expence" />
+    <fragment
+            android:id="@+id/fragment_expense"
+            android:name="com.lulius.fifty_thirty_twenty_budget.ExpenseOverview"
+            android:label="fragment_expense"
+            tools:layout="@layout/fragment_expense" />
+</navigation>
