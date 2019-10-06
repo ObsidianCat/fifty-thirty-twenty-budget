@@ -12,7 +12,7 @@
             tools:layout="@layout/fragment_expense_list" >
         <action
                 android:id="@+id/action_expensesListFragment_to_addExpence"
-                app:destination="@id/addExpense"
+                app:destination="@id/add_expense_dest"
                 app:enterAnim="@anim/slide_in_right"
                 app:exitAnim="@anim/slide_out_left"
                 app:popEnterAnim="@anim/slide_in_left"
@@ -28,10 +28,10 @@
                 />
     </fragment>
     <fragment
-            android:id="@+id/addExpense"
+            android:id="@+id/add_expense_dest"
             android:name="com.lulius.fifty_thirty_twenty_budget.expenses.AddExpense"
-            android:label="fragment_add_expence"
-            tools:layout="@layout/fragment_add_expence" />
+            android:label="fragment_add_expense"
+            tools:layout="@layout/fragment_add_expense" />
     <fragment
             android:id="@+id/fragment_expense"
             android:name="com.lulius.fifty_thirty_twenty_budget.ExpenseOverview"

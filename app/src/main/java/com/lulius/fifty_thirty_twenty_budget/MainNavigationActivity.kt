@@ -3,68 +3,79 @@ package com.lulius.fifty_thirty_twenty_budget
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatDialogFragment
-import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
+import androidx.appcompat.widget.Toolbar
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.navOptions
-import androidx.navigation.ui.NavigationUI
-import com.lulius.fifty_thirty_twenty_budget.expenses.ExpensesListFragment
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.onNavDestinationSelected
+import androidx.navigation.ui.setupActionBarWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainNavigationActivity : AppCompatActivity() {
-    private val transitionOptions = navOptions {
-        anim {
-            enter = R.anim.slide_in_right
-            exit = R.anim.slide_out_left
-            popEnter = R.anim.slide_in_left
-            popExit = R.anim.slide_out_right
-        }
-    }
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
-    private lateinit var textMessage: TextView
-    private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.navigation_overview -> {
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_expenses -> {
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_settings -> {
-                return@OnNavigationItemSelectedListener true
-            }
-        }
-        false
-    }
+    private lateinit var navView: BottomNavigationView
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
+        navView = findViewById(R.id.nav_view)
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
-        val navController = this.findNavController(R.id.nav_host_fragment)
-        NavigationUI.setupActionBarWithNavController(this, navController);
+        val host: NavHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment? ?: return
+
+        // Set up Action Bar
+        navController = host.navController
+
+        appBarConfiguration = AppBarConfiguration(navController.graph)
+        setupActionBar(navController, appBarConfiguration)
     }
 
+    private val onNavigationItemSelectedListener =
+        BottomNavigationView.OnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_overview -> {
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.navigation_expenses -> {
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.navigation_settings -> {
+                    return@OnNavigationItemSelectedListener true
+                }
+            }
+            false
+        }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val retValue = super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.app_bar_actions, menu)
-        return true
+        return retValue
+    }
+
+    private fun setupActionBar(
+        navController: NavController,
+        appBarConfig: AppBarConfiguration
+    ) {
+        // This allows NavigationUI to decide what label to show in the action bar
+        // By using appBarConfig, it will also determine whether to
+        // show the up arrow or drawer menu icon
+        setupActionBarWithNavController(navController, appBarConfig)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        // Handle item selection
-        return when (item.itemId) {
-            R.id.action_add_expense -> {
-                this.findNavController(R.id.nav_host_fragment).navigate(R.id.addExpense, null, transitionOptions)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
+        return item.onNavDestinationSelected(findNavController(R.id.nav_host_fragment))
+                || super.onOptionsItemSelected(item)
+//        navController.navigate(R.id.action_expensesListFragment_to_addExpence)
+        return true
     }
 
     override fun onSupportNavigateUp(): Boolean {
