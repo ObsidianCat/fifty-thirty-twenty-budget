@@ -3,10 +3,10 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/nav_graph"
-        app:startDestination="@id/expensesListFragment">
+        app:startDestination="@id/expenses_list_dest">
 
     <fragment
-            android:id="@+id/expensesListFragment"
+            android:id="@+id/expenses_list_dest"
             android:name="com.lulius.fifty_thirty_twenty_budget.expenses.ExpensesListFragment"
             android:label="fragment_expense_list"
             tools:layout="@layout/fragment_expense_list" >
@@ -20,12 +20,15 @@
                 />
         <action
                 android:id="@+id/action_expensesListFragment_to_fragment_expense"
-                app:destination="@id/fragment_expense"
+                app:destination="@id/fragment_expense_dest"
                 app:enterAnim="@anim/slide_in_right"
                 app:exitAnim="@anim/slide_out_left"
                 app:popEnterAnim="@anim/slide_in_left"
                 app:popExitAnim="@anim/slide_out_right"
                 />
+        <action
+                android:id="@+id/action_expensesListFragment_to_settingsFragment"
+                app:destination="@id/settings_dest" />
     </fragment>
     <fragment
             android:id="@+id/add_expense_dest"
@@ -33,8 +36,17 @@
             android:label="fragment_add_expense"
             tools:layout="@layout/fragment_add_expense" />
     <fragment
-            android:id="@+id/fragment_expense"
+            android:id="@+id/fragment_expense_dest"
             android:name="com.lulius.fifty_thirty_twenty_budget.ExpenseOverview"
             android:label="fragment_expense"
             tools:layout="@layout/fragment_expense" />
+    <fragment
+            android:id="@+id/settings_dest"
+            android:name="com.lulius.fifty_thirty_twenty_budget.settings.SettingsFragment"
+            android:label="fragment_settings_dest"
+            tools:layout="@layout/settings_fragment" >
+        <action
+                android:id="@+id/action_settings_dest_to_expensesListFragment"
+                app:destination="@id/expenses_list_dest" />
+    </fragment>
 </navigation>
