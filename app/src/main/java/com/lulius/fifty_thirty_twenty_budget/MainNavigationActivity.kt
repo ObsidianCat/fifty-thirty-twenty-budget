@@ -13,34 +13,54 @@ import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.view.View
+
 
 class MainNavigationActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     private lateinit var navView: BottomNavigationView
     private lateinit var navController: NavController
+    private lateinit var bottomNav: BottomNavigationView
+    private lateinit var toolbar: Toolbar
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
 
 
         val host: NavHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment? ?: return
 
-        // Set up Action Bar
         navController = host.navController
+        bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
+        toolbar = findViewById<Toolbar>(R.id.toolbar)
 
+        setSupportActionBar(toolbar)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBar(navController, appBarConfiguration)
         setupBottomNavMenu(navController)
+        setupNavigationHidingRules(navController)
+
+    }
+
+    private fun setupNavigationHidingRules(navController: NavController){
+        navController.addOnDestinationChangedListener{
+                controller, destination, arguments ->
+                    if(destination.getId() == R.id.add_expense_dest){
+                        toolbar.setVisibility(View.GONE)
+                        bottomNav?.setVisibility(View.GONE)
+                    } else {
+                        bottomNav?.setVisibility(View.VISIBLE)
+                        toolbar.setVisibility(View.VISIBLE)
+                    }
+
+        }
     }
 
     private fun setupBottomNavMenu(navController: NavController) {
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
         bottomNav?.setupWithNavController(navController)
     }
 
